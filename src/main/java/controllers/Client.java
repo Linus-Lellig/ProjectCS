@@ -1,4 +1,4 @@
-package controller;
+package controllers;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -9,7 +9,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
-@Path("/")
+@Path("client/")
 public class Client {
 
     @GET
@@ -37,8 +37,10 @@ public class Client {
     @Path("{path}")
     @Produces({"text/html"})
     public byte[] getIHTMLFile(@PathParam("path") String path) {
-        return getFile(path);
+        return getFile("client/" + path);
     }
+
+
 
     private byte[] getFile(String filename) {
         try {
