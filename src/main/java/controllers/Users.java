@@ -63,9 +63,11 @@ public class Users {
     public String UsersAdd(@FormDataParam("UserID") Integer UserID, @FormDataParam("Name") String Name) {
         System.out.println("Invoked Users.UsersAdd()");
         try {
-            PreparedStatement ps = Main.db.prepareStatement("INSERT INTO Users (UserID, Name, ValidatedDate) VALUES (?, ?)");
+            PreparedStatement ps = Main.db.prepareStatement("INSERT INTO Users (UserID, Name, ValidatedDate, Admin) VALUES (?, ?, ?, ?)");
             ps.setInt(1, UserID);
             ps.setString(2, Name);
+            ps.setString(3, "date");
+            ps.setBoolean(4, );
             ps.execute();
             return "{\"OK\": \"Added user.\"}";
         } catch (Exception exception) {
