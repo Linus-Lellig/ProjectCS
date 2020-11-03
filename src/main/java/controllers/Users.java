@@ -67,17 +67,12 @@ public class Users {
             ps.setInt(1, UserID);
             ps.setString(2, Name);
             ps.setString(3, "date");
-            ps.setBoolean(4, );
+            ps.setBoolean(4, true);
             ps.execute();
             return "{\"OK\": \"Added user.\"}";
         } catch (Exception exception) {
             System.out.println("Database error: " + exception.getMessage());
             return "{\"Error\": \"Unable to create new item, please see server console for more info.\"}";
         }
-
     }
-
-
 }
-
-
