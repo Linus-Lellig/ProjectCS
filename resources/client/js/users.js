@@ -21,7 +21,7 @@ function getUser() {
     const UserID = document.getElementById("UserID").value;  //get the UserId from the HTML element with id=UserID
     //let UserID = 1; 			  //You could hard code it if you have problems
     //debugger;				  //debugger statement to allow you to step through the code in console dev F12
-    const url = "/users/getUser/";       // API method on webserver
+    const url = "/users/get/";       // API method on webserver
     fetch(url + UserID, {                // UserID as a path parameter
         method: "GET",
     }).then(response => {
@@ -57,7 +57,7 @@ function addUser() {
 function formatUsersList(myJSONArray){
     let dataHTML = "";
     for (let item of myJSONArray) {
-        dataHTML += "<tr><td>" + item.UserID + "<td><td>" + item.Name + "<tr><td>";
+        dataHTML += "<tr><td>" + item.UserID + "<td><td>" + item.UserName + "<tr><td>";
     }
     document.getElementById("UsersTable").innerHTML = dataHTML;
 }

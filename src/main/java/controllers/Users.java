@@ -75,4 +75,22 @@ public class Users {
             return "{\"Error\": \"Unable to create new item, please see server console for more info.\"}";
         }
     }
+
+    @POST
+    @Path("delete/{UserID}")
+    public String DeleteUser(@PathParam("UserID") Integer UserID) throws Exception {
+        System.out.println("Invoked Users.DeleteUser()");
+        if (UserID == null) {
+            throw new Exception("UserID is missing in the HTTP request's URL.");
+        }
+        try {
+            PreparedStatement ps = Main.db.prepareStatement("DELETE FROM Users WHERE UserID = ?");
+            ps.setInt(1, UserID);
+            ps.execute();
+            return "{\"OK\": \"User deleted\"}";
+        } catch (Exception exception) {
+            System.out.println("Database error: " + exception.getMessage());
+            return "{\"Error\": \"Unable to delete item, please see server console for more info.\"}";
+        }
+    }
 }
