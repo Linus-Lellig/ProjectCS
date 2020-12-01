@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>CS Project</title>
     <script src="/client/js/users.js"></script>
+    <script src="/client/js/game.js"></script>
     <link rel="stylesheet" type="text/css" href="/client/css/styles.css">
 </head>
 <body>
@@ -15,9 +16,11 @@
 <form id="userDetails">
     User id: <input type="text" id="UserID">
 </form>
+
 <button onclick="getUser();">Run getUser()</button>
 <div id="DisplayOneUser"></div>
 <br>
+
 <form id="InputUserDetails">
     Username: <input type="text" name="UserName">
     <br>
@@ -26,8 +29,10 @@
     Skill Level: <input type="text" name="UserSkillLevel">
     <br>
 </form>
-<button onclick='addUser();'>Add User</button>
 
+<button onclick='addUser();'>Add User</button>
+<br>
+<button onclick="startGame()">Start Game</button>
 
 </body>
 </html>
