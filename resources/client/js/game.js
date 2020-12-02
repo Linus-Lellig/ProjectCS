@@ -1,10 +1,8 @@
 function startGame() {
     myGameArea.start();
-    myGamePiece = new component(25, 25, "green", 2, 2, 100, 100);
+    myGamePiece = new component(25, 25, "green", 0, 0, 25, 25);//x:50 y:570
 }
 
-velx = 2;
-vely = 2;
 
 var myGameArea = {
     canvas : document.createElement("canvas"),
@@ -31,6 +29,20 @@ var myGamePiece;
 
 function updateGameArea() {
     myGameArea.clear();
+    if (myGameArea.key && myGameArea.key === "w") {
+        moveUp()
+    }
+    if (myGameArea.key && myGameArea.key === "a") {
+        moveLeft()
+    }
+    if (myGameArea.key && myGameArea.key === "s") {
+        moveDown()
+    }
+    if (myGameArea.key && myGameArea.key === "d") {
+        moveRight()
+    }
+
+
     myGamePiece.update();
 }
 
@@ -42,8 +54,8 @@ function component(width, height, colour, velx, vely, x, y) {
     this.width = width;
     this.height = height;
     this.newPos = function () {
-        this.x += velx;
-        this.y += vely;
+        this.x += this.velx;
+        this.y += this.vely;
     },
     this.update = function () {
         ctx = myGameArea.context;
@@ -52,3 +64,26 @@ function component(width, height, colour, velx, vely, x, y) {
     };
 }
 
+function moveUp() {
+    myGamePiece.vely = -10;
+    myGamePiece.velx = 0
+    myGamePiece.newPos();
+}
+
+function moveDown() {
+    myGamePiece.vely = +10;
+    myGamePiece.velx = 0
+    myGamePiece.newPos();
+}
+
+function moveRight() {
+    myGamePiece.velx = +10;
+    myGamePiece.vely = 0
+    myGamePiece.newPos();
+}
+
+function moveLeft() {
+    myGamePiece.velx = -10;
+    myGamePiece.vely = 0
+    myGamePiece.newPos();
+}
