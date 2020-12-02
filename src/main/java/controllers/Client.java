@@ -26,6 +26,7 @@ public class Client {
         return getFile("client/js/" + path);
     }
 
+
     @GET
     @Path("css/{path}")
     @Produces({"text/css"})
