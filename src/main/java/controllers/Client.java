@@ -40,7 +40,6 @@ public class Client {
     }
 
 
-
     private byte[] getFile(String filename) {
         try {
             File file = new File("resources/" + filename);

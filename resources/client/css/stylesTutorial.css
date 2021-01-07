@@ -1,0 +1,74 @@
+body {
+    color:#202124;
+    margin: 20px;
+}
+
+a {
+    color:#202124;
+    font-size:14px;
+    position: sticky;
+}
+
+footer {
+    font-size: 20px;
+}
+
+h1 {
+    padding-left: 5px;
+}
+
+h3 {
+    padding-left: 10px;
+}
+
+section {
+    padding-left: 5px;
+}
+
+article {
+    padding-left: 10px;
+    padding-top: 5px;
+}
+
+div {
+    width: 120px;
+    border: 1px solid black;
+    padding-left: 1px;
+}
+
+#defA {
+    float: left;
+    padding-left: 5px;
+}
+
+#A {
+    float: left;
+    width: 17px;
+    padding-right: 5px;
+    text-align: left;
+}
+
+#defD {
+    float: left;
+    padding-left: 5px;
+}
+
+#D {
+    float: left;
+    width: 17px;
+    padding-right: 5px;
+    text-align: left;
+}
+
+#defS {
+    float: left;
+    padding-left: 5px;
+    width: 77px;
+}
+
+#space {
+    float: left;
+    width: 60px;
+    padding-right: 5px;
+    text-align: left;
+}

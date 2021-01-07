@@ -1,17 +1,22 @@
 <!-- http://localhost:8081/client/index.html -->
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:display="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>CS Project</title>
     <script src="/client/js/users.js"></script>
     <script src="/client/js/game.js"></script>
+    <script src="/client/js/level.js"></script>
     <link rel="stylesheet" type="text/css" href="/client/css/styles.css">
 </head>
 <body>
+<nav>
+    <a href="/client/GameHTML.html">Play</a> |
+    <a href="/client/tutorial.html">Tutorial</a>
+</nav>
 <br>
-<button onclick="getUsersList();">Run getUsersList()</button>
+<button onclick="getUsersList();" id="UserListButton" >Run getUsersList()</button>
 <table id="UsersTable"></table>
 <br>
 
@@ -19,7 +24,7 @@
     User id: <input type="text" id="UserID">
 </form>
 
-<button onclick="getUser();">Run getUser()</button>
+<button onclick="getUser();" id="GetUserButton" >Run getUser()</button>
 <div id="DisplayOneUser"></div>
 <br>
 
@@ -32,9 +37,37 @@
     <br>
 </form>
 
-<button onclick='addUser();'>Add User</button>
+<button onclick='addUser();' id="AddUserButton" >Add User</button>
 <br>
-<button onclick="startGame();">Start Game</button>
+<br>
+<form action="/client/tutorial.html">
+    <button type="submit" id="tutorialButton">Tutorial</button>
+</form>
+<br>
+
+<button id="startGameButton" onclick="startGame(); hide();">
+    Start Game
+    <script>
+        function hide() {
+            document.getElementById("InputUserDetails").setAttribute("hidden", "true");
+            document.getElementById("UsersTable").setAttribute("hidden", "true");
+            document.getElementById("userDetails").setAttribute("hidden", "true");
+            document.getElementById("DisplayOneUser").setAttribute("hidden", "true");
+            document.getElementById("UserListButton").setAttribute("hidden", "true");
+            document.getElementById("GetUserButton").setAttribute("hidden", "true");
+            document.getElementById("AddUserButton").setAttribute("hidden", "true");
+            document.getElementById("startGameButton").setAttribute("hidden", "true");
+        }
+    </script>
+</button>
+
+<button onclick="myGameArea.stop()">STOP!</button>
+<br>
+<br>
+<div id="jump">
+    Can you jump?
+</div>
+<div id="colourbox"></div>
 
 </body>
 </html>

@@ -1,6 +1,31 @@
+body {
+    color:#202124;
+    margin: 20px;
+}
+
 canvas {
     border-style: solid;
     border-width: 1px;
     border-color: black;
     background-color: #aaaaaaaa;
+}
+
+a {
+    color:#202124;
+    font-size:14px;
+    position: sticky;
+}
+
+#jump {
+    float: left;
+    width: 100px;
+    margin-right: 7px;
+}
+
+#colourbox {
+    float: left;
+    width: 17px;
+    height:17px;
+    background-color: red;
+    margin-top: 2px;
 }
