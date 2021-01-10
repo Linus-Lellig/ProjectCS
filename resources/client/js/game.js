@@ -34,7 +34,6 @@ var myGameArea = {
         //})
         window.addEventListener('keydown', keydown);
         window.addEventListener('keyup', keyup);
-
         //})
     },
     clear : function() {
@@ -136,7 +135,6 @@ function updateGameArea() {
     //MoveEventListener();
     //keydown();
     //keyup();
-
     if (keys.left === true) {
         moveLeft();
     }
@@ -147,11 +145,12 @@ function updateGameArea() {
         myGamePiece.velx = velx;
         myGamePiece.vely  = vely;
     }
-    if (keys.up === true) {
+    if (keys.up === true && disableJump === false) {
         jump();
     }
 
-    renderPlat()
+    betterPlatCollision();
+    renderPlat();
     myGamePiece.newPos();
     myGamePiece.update();
 
@@ -224,15 +223,16 @@ function jump() {
     function TurndisableJumpOFF() {
         disableJump = false;
     }
+
     function TurndisableJumpON() {
         disableJump = true;
     }
 
     let bottom = myGameArea.canvas.height - myGamePiece.height;
     for (let i = 0; i < num; i++) {
-        if (myGamePiece.y >= bottom || myGamePiece.y === platforms[i].y) {
-            console.log("i: " + i);
-            console.log("platforms.y: " + platforms[i].y);
+        //console.log("i: " + i);
+        console.log("platforms.y: " + platforms[i].y);
+        if (myGamePiece.y >= bottom || myGamePiece.y === platforms[i].y /*&& disableJump === false*/) {
             disableJump = true;
             disableGravity = false;
             //if (prevy < myGamePiece.y) {
@@ -244,7 +244,9 @@ function jump() {
             setTimeout(TurndisableJumpOFF, 500)
             myGamePiece.vely = -2;
             vely = -2;
+            betterPlatCollision();
             myGamePiece.newPos();
+            //}
         }
     }
 }

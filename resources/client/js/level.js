@@ -1,5 +1,5 @@
 var platforms = [];
-var num = 1;
+var num = 3;
 
 
 function StartLevel() {
@@ -38,10 +38,23 @@ function betterPlatCollision() {
             let crash = false;
 
             if (myBottom >= PlatTop && myBottom < PlatBottom && myGamePiece.x > platforms[i].x && myGamePiece.x < platforms[i].x + platforms[i].width) {
-                myGamePiece.y = PlatTop - myGamePiece.height;
+                if (myBottom > PlatTop && myBottom < PlatBottom && myGamePiece.x > platforms[i].x && myGamePiece.x < platforms[i].x + platforms[i].width) {
+                    myGamePiece.y = PlatTop - myGamePiece.height;
+                    if (i < num -1) {
+                        myGamePiece.y -= 5;
+                    }
+                    else {
+                        myGamePiece.y = PlatTop - myGamePiece.height;
+                    }
+
+
+                }
+
                 myGamePiece.vely = 0;
+
                 if (prevy === myGamePiece.y) {//then allow it to jump
-                    disableJump = false
+
+
                 }
                 prevy = myGamePiece.y
                 disableJump = false;
@@ -81,6 +94,5 @@ function renderPlat() {
     for (let i = 0; i < num; i++) {
         ctx.fillRect(platforms[i].x, platforms[i].y, platforms[i].width, platforms[i].height);
     }
-    betterPlatCollision();
 }
 
