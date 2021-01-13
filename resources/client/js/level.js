@@ -11,6 +11,8 @@ function StartLevel() {
 function createPlat() {
     for (let i = 0; i < num; i++) {
         platforms.push({x: (200 + (i*300)), y: (640 - (50*i)), width: 110, height: 15})
+        console.log("PlatTop "+ i + " " + platforms[i].y);
+        console.log("platbottom "+ i + " " + (platforms[i].y + platforms[i].height));
     }
 }
 
@@ -38,28 +40,18 @@ function betterPlatCollision() {
             let crash = false;
 
             if (myBottom >= PlatTop && myBottom < PlatBottom && myGamePiece.x > platforms[i].x && myGamePiece.x < platforms[i].x + platforms[i].width) {
-                if (myBottom > PlatTop && myBottom < PlatBottom && myGamePiece.x > platforms[i].x && myGamePiece.x < platforms[i].x + platforms[i].width) {
-                    myGamePiece.y = PlatTop - myGamePiece.height;
-                    if (i < num -1) {
-                        myGamePiece.y -= 5;
-                    }
-                    else {
-                        myGamePiece.y = PlatTop - myGamePiece.height;
-                    }
-
-
-                }
+                myGamePiece.y = PlatTop - myGamePiece.height;
+                console.log("myBottom: " + (myGamePiece.y + myGamePiece.height));
 
                 myGamePiece.vely = 0;
+                vely = 0;
 
-                if (prevy === myGamePiece.y) {//then allow it to jump
 
-
-                }
                 prevy = myGamePiece.y
                 disableJump = false;
+                myGamePiece.gravitySpeed = 0;
                 disableGravity = true;
-                console.log("y set to PlatTop")
+                //console.log("y set to PlatTop")
                 //console.log("myBottom: " + myBottom);
                 //console.log("myTop: " + myTop);
                 //console.log("PlatTop: " + PlatTop);
@@ -67,8 +59,8 @@ function betterPlatCollision() {
                 //console.log("myRight: " + myRight);
             }
             else {
-                disableGravity = false;
-                myGamePiece.vely = vely;
+                //disableGravity = false;
+                //myGamePiece.vely = vely;
             } /*else if (myBottom > PlatBottom && myTop <= PlatBottom &&
                 myGamePiece.x > platforms[i].x && myGamePiece.x < platforms[i].x + platforms[i].width) {//checks for collision between myTop and PlatBottom to remove teleporting
                 myGamePiece.y = PlatBottom;

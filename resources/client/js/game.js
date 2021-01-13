@@ -4,12 +4,14 @@ var prevx;
 var prevy;
 var prev2y;
 var disableJump = false;
+var disableGravity = false;
+var id = requestAnimationFrame(updateGameArea);
+var stop = false;
 var keys = {
     right: false,
     left: false,
     up: false
 }
-var disableGravity;
 //requestAnimationFrame(updateGameArea);
 function startGame() {
     myGameArea.start();
@@ -37,11 +39,14 @@ var myGameArea = {
         //})
     },
     clear : function() {
-        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        myGameArea.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
     },
     stop : function() {
-        cancelAnimationFrame(updateGameArea);
-        clearInterval(this.interval);
+        stop = true;
+        id = requestAnimationFrame(updateGameArea);
+        cancelAnimationFrame(id);
+        //console.log(id);
+        //clearInterval(this.interval);
     }
 };
 
@@ -110,6 +115,7 @@ function keyup(e) {
     myGameArea.key = e.key;
     if (e.key === " ") {
         keys.up = false;
+        disableJump = true;
         //console.log("space keyup");
     }
     if (e.key === "a") {
@@ -122,39 +128,70 @@ function keyup(e) {
     }
 }
 
-function updateGameArea() {
-    myGameArea.clear();
+function updateGameArea() { //runs with requestAnimFrame
+    if (stop === false) {
+        myGameArea.clear();
 
-                                                                                    //if (disableJump === false) {
-    //JumpEventListener();
-                                                                //document.getElementById("colourbox").style.backgroundColor = "green";
-                                                                //} //else {
-                                                                //document.getElementById("colourbox").style.backgroundColor = "red";
-                                                                //}
+        let bottom = myGameArea.canvas.height - myGamePiece.height;
+        if (myGamePiece.y === bottom) {
+            disableGravity = true;
+            vely = 0;
+        } else if (disableJump === true) {
+            disableGravity = false;
+        } else {
+            disableGravity = false;
+        }
+        //console.log("disableGravity: " + disableGravity);
 
-    //MoveEventListener();
-    //keydown();
-    //keyup();
-    if (keys.left === true) {
-        moveLeft();
-    }
-    else if (keys.right === true) {
-        moveRight();
-    }
-    else {
-        myGamePiece.velx = velx;
-        myGamePiece.vely  = vely;
-    }
-    if (keys.up === true && disableJump === false) {
-        jump();
-    }
 
-    betterPlatCollision();
-    renderPlat();
-    myGamePiece.newPos();
-    myGamePiece.update();
+        for (let i = 0; i < num; i++) {
+            if (myGamePiece.y >= bottom || (myGamePiece.y <= platforms[i].y + 1 && myGamePiece.y >= platforms[i].y - 1 && platforms[i].x < myGamePiece.x && myGamePiece.x < platforms[i].x + platforms[i].width)) {
+                disableJump = false;
+                //myGamePiece.vely = 0;
+                //vely = 0;
+            } else {
+                disableJump = true;
+            }
+        }
+        //console.log("disableJump: " + disableJump);
 
-    requestAnimationFrame(updateGameArea);
+        //console.log(myGamePiece.vely);
+        //console.log(vely);
+
+        //id = requestAnimationFrame(updateGameArea);
+        //console.log(id);
+        //if (disableJump === false) {
+        //JumpEventListener();
+        //document.getElementById("colourbox").style.backgroundColor = "green";
+        //} //else {
+        //document.getElementById("colourbox").style.backgroundColor = "red";
+        //}
+
+        //MoveEventListener();
+        //keydown();
+        //keyup();
+        if (keys.left === true) {
+            moveLeft();
+        }
+        else if (keys.right === true) {
+            moveRight();
+        }
+        else {
+            myGamePiece.velx = velx;
+            myGamePiece.vely = vely;
+        }
+        if (keys.up === true && disableJump === false) {
+            jump();
+        } else if (keys.up === false) {disableJump = true;}
+
+
+        //betterPlatCollision();
+        renderPlat();
+        myGamePiece.newPos();
+        myGamePiece.update();
+
+        id = requestAnimationFrame(updateGameArea);
+    }
 }
 
 
@@ -165,13 +202,14 @@ function component(width, height, colour, velx, vely, x, y) {
     this.colour =  colour;
     this.width = width;
     this.height = height;
-    this.gravity = 0.2;
+    this.gravity = 0.05;
     this.gravitySpeed = 0;
     this.newPos = function () {
-        if (this.gravitySpeed <= 7) {
+        //this.bordercrash();
+        if (this.gravitySpeed <= 10) {
             this.gravitySpeed += this.gravity;
         }
-        if (disableJump === true || disableGravity === true) {
+        if (disableGravity === true) {
             this.gravitySpeed = 0;
         }
         prev2y = prevy;
@@ -187,6 +225,8 @@ function component(width, height, colour, velx, vely, x, y) {
             let bottom = myGameArea.canvas.height - this.height;
                 if (this.y > bottom) {
                     this.y = bottom;
+                    disableJump = false;
+                    //disableGravity = true;
                 }
         },
             this.update = function () {
@@ -228,24 +268,26 @@ function jump() {
         disableJump = true;
     }
 
+    vely = 0;
     let bottom = myGameArea.canvas.height - myGamePiece.height;
+
     for (let i = 0; i < num; i++) {
         //console.log("i: " + i);
-        console.log("platforms.y: " + platforms[i].y);
-        if (myGamePiece.y >= bottom || myGamePiece.y === platforms[i].y /*&& disableJump === false*/) {
+        //console.log("platforms.y: " + platforms[i].y);
+        if (myGamePiece.y >= bottom || (myGamePiece.y === platforms[i].y && myGamePiece.x > platforms[i].x && myGamePiece.x < platforms[i].x + platforms[i].width)) {
+            console.log("allowed to jump");
             disableJump = true;
-            disableGravity = false;
+            //disableGravity = false;
             //if (prevy < myGamePiece.y) {
             //console.log("falling");
             //cantJump()
             //break JumpValidation;
 //Turn disable jump off when hit the ground then instantly back on
             //}
-            setTimeout(TurndisableJumpOFF, 500)
-            myGamePiece.vely = -2;
-            vely = -2;
-            betterPlatCollision();
-            myGamePiece.newPos();
+            //setTimeout(TurndisableJumpOFF, 500)
+            myGamePiece.vely = -4;
+            vely = -4;
+            //myGamePiece.newPos();
             //}
         }
     }
