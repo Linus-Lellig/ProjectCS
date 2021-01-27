@@ -15,7 +15,7 @@ var keys = {
 //requestAnimationFrame(updateGameArea);
 function startGame() {
     myGameArea.start();
-    myGamePiece = new component(25, 25, "green", 2, 0, 50, 570);//x:50 y:570
+    myGamePiece = new component(25, 25, "green", 0, 0, 50, 570);//x:50 y:570
     StartLevel();
     requestAnimationFrame(updateGameArea);
 }
@@ -25,15 +25,15 @@ var myGameArea = {
     canvas : document.createElement("canvas"),
     start : function() {
         console.log("Invoked myGameArea.start()");
-        this.canvas.width = 1200;
+        this.canvas.width = 1800;
         this.canvas.height = 700;
         this.context = this.canvas.getContext("2d");
         document.body.insertBefore(this.canvas, document.body.childNodes[0]);
         //requestAnimationFrame(updateGameArea);
         //this.interval = setInterval(updateGameArea, 30);
-        //window.addEventListener('keydown', function(e) {
-            //myGameArea.key = e.key;
-        //})
+        /*window.addEventListener('keydown', function(e) {
+            myGameArea.key = e.key;
+        })*/
         window.addEventListener('keydown', keydown);
         window.addEventListener('keyup', keyup);
         //})
@@ -59,8 +59,8 @@ function MoveEventListener() {
         moveRight();
     }
     else {
-        myGamePiece.velx = velx;
-        myGamePiece.vely = vely;
+        myGamePiece.velx = 5;
+        myGamePiece.vely = 0;
     }
 }
 
@@ -131,6 +131,8 @@ function keyup(e) {
 function updateGameArea() { //runs with requestAnimFrame
     if (stop === false) {
         myGameArea.clear();
+
+        //console.log("disableJump: " + disableJump)
 
         let bottom = myGameArea.canvas.height - myGamePiece.height;
         if (myGamePiece.y === bottom) {
@@ -268,16 +270,17 @@ function jump() {
         disableJump = true;
     }
 
-    vely = 0;
+    //vely = 0;
     let bottom = myGameArea.canvas.height - myGamePiece.height;
 
     for (let i = 0; i < num; i++) {
         //console.log("i: " + i);
         //console.log("platforms.y: " + platforms[i].y);
         if (myGamePiece.y >= bottom || (myGamePiece.y === platforms[i].y && myGamePiece.x > platforms[i].x && myGamePiece.x < platforms[i].x + platforms[i].width)) {
+
             console.log("allowed to jump");
             disableJump = true;
-            //disableGravity = false;
+            disableGravity = false;
             //if (prevy < myGamePiece.y) {
             //console.log("falling");
             //cantJump()

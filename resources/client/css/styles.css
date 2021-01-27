@@ -15,17 +15,3 @@ a {
     font-size:14px;
     position: sticky;
 }
-
-#jump {
-    float: left;
-    width: 100px;
-    margin-right: 7px;
-}
-
-#colourbox {
-    float: left;
-    width: 17px;
-    height:17px;
-    background-color: red;
-    margin-top: 2px;
-}

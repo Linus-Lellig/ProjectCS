@@ -11,8 +11,8 @@ function StartLevel() {
 function createPlat() {
     for (let i = 0; i < num; i++) {
         platforms.push({x: (200 + (i*300)), y: (640 - (50*i)), width: 110, height: 15})
-        console.log("PlatTop "+ i + " " + platforms[i].y);
-        console.log("platbottom "+ i + " " + (platforms[i].y + platforms[i].height));
+        //console.log("PlatTop "+ i + " " + platforms[i].y);
+        //console.log("platbottom "+ i + " " + (platforms[i].y + platforms[i].height));
     }
 }
 
@@ -30,18 +30,19 @@ function PlatCollision() {
 
 function betterPlatCollision() {
     for (let i = 0; i < num; i++) {
-        //if (platforms[i].y > myGamePiece.y) {
             let myLeft = myGamePiece.x;
             let myRight = myGamePiece.x + myGamePiece.width;
             let myTop = myGamePiece.y;
             let myBottom = myGamePiece.y + myGamePiece.height;
             let PlatTop = platforms[i].y;
             let PlatBottom = platforms[i].y + platforms[i].height;
-            let crash = false;
+            let PlatCrash = false;
 
             if (myBottom >= PlatTop && myBottom < PlatBottom && myGamePiece.x > platforms[i].x && myGamePiece.x < platforms[i].x + platforms[i].width) {
                 myGamePiece.y = PlatTop - myGamePiece.height;
-                console.log("myBottom: " + (myGamePiece.y + myGamePiece.height));
+                //console.log("myBottom: " + (myGamePiece.y + myGamePiece.height));
+
+                PlatCrash = true;
 
                 myGamePiece.vely = 0;
                 vely = 0;
